@@ -1,0 +1,8 @@
+hyperopt==0.2.5
+matplotlib==3.4.2
+transformers==4.8.2
+torch==1.7.1+cu110
+numpy==1.19.5
+pandas==1.2.5
+functions==0.7.0
+scikit_learn==0.24.2
