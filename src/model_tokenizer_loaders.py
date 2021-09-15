@@ -41,7 +41,7 @@ def load_model(model_name):
     except:
         print(""" Error: model_name has to be one of the following: "BERT_CLS", "BERT_improved_CLS", "BERT_mean", "RoBERTa_CLS", 
             "RoBERTa_improved_CLS", "RoBERTa_mean", "RobBERT", "mBERT_test",
-            "mBERT_all", "XLM-R_test", "XLM-R_all"""")
+            "mBERT_all", "XLM-R_test", "XLM-R_all""")
               
     return(bert)
 
@@ -79,7 +79,7 @@ def load_tokenizer(model_name):
     except:
         print(""" Error: model_name has to be one of the following: "BERT_CLS", "BERT_improved_CLS", "BERT_mean", "RoBERTa_CLS", 
             "RoBERTa_improved_CLS", "RoBERTa_mean", "RobBERT", "mBERT_test",
-            "mBERT_all", "XLM-R_test", "XLM-R_all"""")
+            "mBERT_all", "XLM-R_test", "XLM-R_all""")
               
     return(tokenizer)
 
@@ -279,6 +279,6 @@ def models_hyperparameters(model_name):
     except:
         print(""" Error: model_name has to be one of the following: "BERT_CLS", "BERT_improved_CLS", "BERT_mean", "RoBERTa_CLS", 
             "RoBERTa_improved_CLS", "RoBERTa_mean", "RobBERT", "mBERT_test",
-            "mBERT_all", "XLM-R_test", "XLM-R_all"""")
+            "mBERT_all", "XLM-R_test", "XLM-R_all""")
               
     return(space, nb_trials, model_name)
