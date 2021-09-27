@@ -35,7 +35,7 @@ def split_dataset(data, model_name):
             Name of the model to load. It has to be one of these strings:
             "BERT_CLS", "BERT_improved_CLS", "BERT_mean", "RoBERTa_CLS", 
             "RoBERTa_improved_CLS", "RoBERTa_mean", "RobBERT", "mBERT_test",
-            "mBERT_all", "XLM-R_test", "XLM-R_all".
+            "mBERT_all", "XLM-R_test", "XLM-R_all", "mBERT_all_tanh".
     """
 
     train_text, temp_text, train_labels, temp_labels = train_test_split(data[['content_en', 'only_body', 'content_fr']], data['manual_label'], 
@@ -406,7 +406,7 @@ def train(model, train_dataloader, cross_entropy, optimizer, scheduler, model_na
                 Name of the model to load. It has to be one of these strings:
                 "BERT_CLS", "BERT_improved_CLS", "BERT_mean", "RoBERTa_CLS", 
                 "RoBERTa_improved_CLS", "RoBERTa_mean", "RobBERT", "mBERT_test",
-                "mBERT_all", "XLM-R_test", "XLM-R_all".
+                "mBERT_all", "XLM-R_test", "XLM-R_all", "mBERT_all_tanh".
     """
 
     model.train()
@@ -501,7 +501,7 @@ def validation(model, train_dataloader, val_dataloader, cross_entropy, model_nam
                 Name of the model to load. It has to be one of these strings:
                 "BERT_CLS", "BERT_improved_CLS", "BERT_mean", "RoBERTa_CLS", 
                 "RoBERTa_improved_CLS", "RoBERTa_mean", "RobBERT", "mBERT_test",
-                "mBERT_all", "XLM-R_test", "XLM-R_all".
+                "mBERT_all", "XLM-R_test", "XLM-R_all", "mBERT_all_tanh".
     """
 
     print("\nEvaluating...")
@@ -594,7 +594,7 @@ def fine_tuning_model(epochs, lr, dropout, folder_name, train_text, val_text, te
             Name of the model to load. It has to be one of these strings:
             "BERT_CLS", "BERT_improved_CLS", "BERT_mean", "RoBERTa_CLS", 
             "RoBERTa_improved_CLS", "RoBERTa_mean", "RobBERT", "mBERT_test",
-            "mBERT_all", "XLM-R_test", "XLM-R_all".
+            "mBERT_all", "XLM-R_test", "XLM-R_all", "mBERT_all_tanh".
     """
 
     # Set initial loss to infinite
