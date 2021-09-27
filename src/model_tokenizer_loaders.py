@@ -15,7 +15,7 @@ def load_model(model_name):
             Name of the model to load. It has to be one of these strings:
             "BERT_CLS", "BERT_improved_CLS", "BERT_mean", "RoBERTa_CLS", 
             "RoBERTa_improved_CLS", "RoBERTa_mean", "RobBERT", "mBERT_test",
-            "mBERT_all", "XLM-R_test", "XLM-R_all".
+            "mBERT_all", "XLM-R_test", "XLM-R_all", "mBERT_all_tanh".
     """
     
     try:
@@ -41,7 +41,7 @@ def load_model(model_name):
     except:
         print(""" Error: model_name has to be one of the following: "BERT_CLS", "BERT_improved_CLS", "BERT_mean", "RoBERTa_CLS", 
             "RoBERTa_improved_CLS", "RoBERTa_mean", "RobBERT", "mBERT_test",
-            "mBERT_all", "XLM-R_test", "XLM-R_all""")
+            "mBERT_all", "XLM-R_test", "XLM-R_all", "mBERT_all_tanh" """)
               
     return(bert)
 
@@ -54,7 +54,7 @@ def load_tokenizer(model_name):
             Name of the model to load. It has to be one of these strings:
             "BERT_CLS", "BERT_improved_CLS", "BERT_mean", "RoBERTa_CLS", 
             "RoBERTa_improved_CLS", "RoBERTa_mean", "RobBERT", "mBERT_test",
-            "mBERT_all", "XLM-R_test", "XLM-R_all".
+            "mBERT_all", "XLM-R_test", "XLM-R_all", "mBERT_all_tanh".
     """
     
     try:
@@ -79,7 +79,7 @@ def load_tokenizer(model_name):
     except:
         print(""" Error: model_name has to be one of the following: "BERT_CLS", "BERT_improved_CLS", "BERT_mean", "RoBERTa_CLS", 
             "RoBERTa_improved_CLS", "RoBERTa_mean", "RobBERT", "mBERT_test",
-            "mBERT_all", "XLM-R_test", "XLM-R_all""")
+            "mBERT_all", "XLM-R_test", "XLM-R_all", "mBERT_all_tanh" """)
               
     return(tokenizer)
 
@@ -98,7 +98,7 @@ class BERT_Arch(nn.Module):
         Name of the model to load. It has to be one of these strings:
         "BERT_CLS", "BERT_improved_CLS", "BERT_mean", "RoBERTa_CLS", 
         "RoBERTa_improved_CLS", "RoBERTa_mean", "RobBERT", "mBERT_test",
-        "mBERT_all", "XLM-R_test", "XLM-R_all".
+        "mBERT_all", "XLM-R_test", "XLM-R_all", "mBERT_all_tanh".
     
 
     Methods
@@ -120,7 +120,7 @@ class BERT_Arch(nn.Module):
             Name of the model to load. It has to be one of these strings:
             "BERT_CLS", "BERT_improved_CLS", "BERT_mean", "RoBERTa_CLS", 
             "RoBERTa_improved_CLS", "RoBERTa_mean", "RobBERT", "mBERT_test",
-            "mBERT_all", "XLM-R_test", "XLM-R_all".
+            "mBERT_all", "XLM-R_test", "XLM-R_all", "mBERT_all_tanh".
         """
 
         super(BERT_Arch, self).__init__()
@@ -133,6 +133,9 @@ class BERT_Arch(nn.Module):
 
         # ReLU activation function
         self.relu =  nn.ReLU()
+        
+        # Tanh activation function
+        self.tanh =  nn.Tanh()
         
         # Linear layer CLS-pooling
         self.fc0 = nn.Linear(768,4)
@@ -159,7 +162,7 @@ class BERT_Arch(nn.Module):
             Name of the model to load. It has to be one of these strings:
             "BERT_CLS", "BERT_improved_CLS", "BERT_mean", "RoBERTa_CLS", 
             "RoBERTa_improved_CLS", "RoBERTa_mean", "RobBERT", "mBERT_test",
-            "mBERT_all", "XLM-R_test", "XLM-R_all".
+            "mBERT_all", "XLM-R_test", "XLM-R_all", "mBERT_all_tanh".
         """
 
         # Get the row output of bert as a dictionary.
@@ -188,13 +191,32 @@ class BERT_Arch(nn.Module):
             # Make the average of all the tokens of the last hidden state.
             token_embeddings = token_embeddings.sum(axis=1) / mask.sum(axis=-1).unsqueeze(-1)
         
-        #If this is not a CLS-pooling
-        if model_name != "BERT_CLS" and model_name != "RoBERTa_CLS":
+        #If this is not a CLS-pooling and not a Tanh activation
+        if model_name != "BERT_CLS" and model_name != "RoBERTa_CLS" and model_name != "mBERT_all_tanh":
             # First linear layer
             x = self.fc1(token_embeddings)
 
             # ReLU activation function
             x = self.relu(x)
+
+            # Dropout layer
+            x = self.dropout(x)
+
+            # Last linear layer
+            x = self.fc2(x)
+
+            # Softmax activation function
+            x = self.softmax(x)
+            
+         if model_name == "mBERT_all_tanh":
+            # First linear layer
+            x = self.fc1(token_embeddings)
+
+            # ReLU activation function
+            x = self.relu(x)
+            
+            # Tanh activation function
+            x = self.tanh(x)
 
             # Dropout layer
             x = self.dropout(x)
@@ -215,7 +237,7 @@ def models_hyperparameters(model_name):
             Name of the model to load. It has to be one of these strings:
             "BERT_CLS", "BERT_improved_CLS", "BERT_mean", "RoBERTa_CLS", 
             "RoBERTa_improved_CLS", "RoBERTa_mean", "RobBERT", "mBERT_test",
-            "mBERT_all", "XLM-R_test", "XLM-R_all".
+            "mBERT_all", "XLM-R_test", "XLM-R_all", "mBERT_all_tanh".
     """
     
     name = 'TPE_' + model_name
@@ -253,7 +275,7 @@ def models_hyperparameters(model_name):
 
         nb_trials = 10
         
-    if model_name == "mBERT_all":
+    if "mBERT_all" in model_name:
         space = {
             "lr": hp.choice("lr", [5*10**(-5), 10**(-4), 5*10**(-4), 10**(-3), 5*10**(-3)]),
             "dropout": hp.choice("dropout", [0.2, 0.3, 0.4, 0.5]),
@@ -279,6 +301,6 @@ def models_hyperparameters(model_name):
     except:
         print(""" Error: model_name has to be one of the following: "BERT_CLS", "BERT_improved_CLS", "BERT_mean", "RoBERTa_CLS", 
             "RoBERTa_improved_CLS", "RoBERTa_mean", "RobBERT", "mBERT_test",
-            "mBERT_all", "XLM-R_test", "XLM-R_all""")
+            "mBERT_all", "XLM-R_test", "XLM-R_all", "mBERT_all_tanh" """)
               
     return(space, nb_trials, model_name)
