@@ -72,7 +72,7 @@ def get_model(model_name, folder_name, lr, dropout, epochs):
             Name of the model to load. It has to be one of these strings:
             "BERT_CLS", "BERT_improved_CLS", "BERT_mean", "RoBERTa_CLS", 
             "RoBERTa_improved_CLS", "RoBERTa_mean", "RobBERT", "mBERT_test",
-            "mBERT_all", "XLM-R_test", "XLM-R_all".
+            "mBERT_all", "XLM-R_test", "XLM-R_all", "mBERT_all_tanh".
         - folder_name: str
             name of the folder where is stored the file
         - lr: float
@@ -103,7 +103,7 @@ def get_test_tensors(model_name, test_text, test_labels):
             Name of the model to load. It has to be one of these strings:
             "BERT_CLS", "BERT_improved_CLS", "BERT_mean", "RoBERTa_CLS", 
             "RoBERTa_improved_CLS", "RoBERTa_mean", "RobBERT", "mBERT_test",
-            "mBERT_all", "XLM-R_test", "XLM-R_all".
+            "mBERT_all", "XLM-R_test", "XLM-R_all", "mBERT_all_tanh".
         - test_text: list
             5th output of split_dataset()
         - test_labels: list
@@ -143,7 +143,7 @@ def print_accuracy_test_unilingual(model, test_seq, test_mask, test_y, device, m
             Name of the model to load. It has to be one of these strings:
             "BERT_CLS", "BERT_improved_CLS", "BERT_mean", "RoBERTa_CLS", 
             "RoBERTa_improved_CLS", "RoBERTa_mean", "RobBERT", "mBERT_test",
-            "mBERT_all", "XLM-R_test", "XLM-R_all".
+            "mBERT_all", "XLM-R_test", "XLM-R_all", "mBERT_all_tanh".
     """
     
     acc_list = []
@@ -202,7 +202,7 @@ def print_accuracy_test_multilingual(model, test_seq_nl, test_mask_nl, test_seq_
             Name of the model to load. It has to be one of these strings:
             "BERT_CLS", "BERT_improved_CLS", "BERT_mean", "RoBERTa_CLS", 
             "RoBERTa_improved_CLS", "RoBERTa_mean", "RobBERT", "mBERT_test",
-            "mBERT_all", "XLM-R_test", "XLM-R_all".
+            "mBERT_all", "XLM-R_test", "XLM-R_all", "mBERT_all_tanh".
     """
     
     acc_list_nl = []
@@ -288,7 +288,7 @@ def print_precision_recall_f1_test_unilingual(model, test_seq, test_mask, test_y
             Name of the model to load. It has to be one of these strings:
             "BERT_CLS", "BERT_improved_CLS", "BERT_mean", "RoBERTa_CLS", 
             "RoBERTa_improved_CLS", "RoBERTa_mean", "RobBERT", "mBERT_test",
-            "mBERT_all", "XLM-R_test", "XLM-R_all".
+            "mBERT_all", "XLM-R_test", "XLM-R_all", "mBERT_all_tanh".
     """
 
     all_precision = []
@@ -345,7 +345,7 @@ def print_precision_recall_f1_test_multilingual(model, test_seq_nl, test_mask_nl
             Name of the model to load. It has to be one of these strings:
             "BERT_CLS", "BERT_improved_CLS", "BERT_mean", "RoBERTa_CLS", 
             "RoBERTa_improved_CLS", "RoBERTa_mean", "RobBERT", "mBERT_test",
-            "mBERT_all", "XLM-R_test", "XLM-R_all".
+            "mBERT_all", "XLM-R_test", "XLM-R_all", "mBERT_all_tanh".
     """
 
     all_precision_nl = []
